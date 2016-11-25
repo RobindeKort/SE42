@@ -3,11 +3,12 @@ package auction.service;
 import java.util.List;
 import static org.junit.Assert.*;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
 import auction.domain.User;
+import javax.persistence.Persistence;
+import util.DatabaseCleaner;
 
 public class JPARegistrationMgrTest {
 
@@ -15,7 +16,10 @@ public class JPARegistrationMgrTest {
 
     @Before
     public void setUp() throws Exception {
+        System.out.print("before");
         registrationMgr = new RegistrationMgr();
+        DatabaseCleaner dc = new DatabaseCleaner(Persistence.createEntityManagerFactory("db").createEntityManager());
+        dc.clean();
     }
 
     @Test
@@ -44,17 +48,13 @@ public class JPARegistrationMgrTest {
     public void getUsers() {
         List<User> users = registrationMgr.getUsers();
         assertEquals(0, users.size());
-
         User user1 = registrationMgr.registerUser("xxx8@yyy");
         users = registrationMgr.getUsers();
         assertEquals(1, users.size());
         assertSame(users.get(0), user1);
-
-
         User user2 = registrationMgr.registerUser("xxx9@yyy");
         users = registrationMgr.getUsers();
         assertEquals(2, users.size());
-
         registrationMgr.registerUser("abc");
         //geen nieuwe user toegevoegd, dus gedrag hetzelfde als hiervoor
         users = registrationMgr.getUsers();
