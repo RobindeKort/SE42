@@ -17,10 +17,16 @@ public class UserDAOJPAImpl implements UserDAO {
 
     @Override
     public int count() {
-        return (Integer) users.createNativeQuery("SELECT count(1) FROM User") //miss niet helemaal goed?
+        int ret = (Integer) users.createNamedQuery("SELECT count(*) FROM User")
                 .getSingleResult();
+        return ret;
     }
 
+    /**
+     * Transaction moet verplaatst worden naar een 'hoger niveau' zodat meerdere
+     * persists/merges tegelijk uitgevoerd kunnen worden. 
+     * @param user 
+     */
     @Override
     public void create(User user) {
         if (findByEmail(user.getEmail()) != null) {
@@ -31,17 +37,24 @@ public class UserDAOJPAImpl implements UserDAO {
         users.getTransaction().commit();
     }
 
+    /**
+     * Transaction moet verplaatst worden naar een 'hoger niveau' zodat meerdere
+     * persists/merges tegelijk uitgevoerd kunnen worden. 
+     * @param user 
+     */
     @Override
     public void edit(User user) {
         if (findByEmail(user.getEmail()) == null) {
             throw new IllegalArgumentException();
         }
-        users.persist(user);
+        users.getTransaction().begin();
+        users.merge(user);
+        users.getTransaction().commit();
     }
 
     @Override
     public List<User> findAll() {
-        return users.createQuery("SELECT u FROM User u").getResultList();
+        return users.createQuery("SELECT * FROM User").getResultList();
     }
 
     @Override
@@ -49,6 +62,10 @@ public class UserDAOJPAImpl implements UserDAO {
         return users.find(User.class, email);
     }
 
+    /**
+     * Wanneer gebruik je een Transaction? Navragen!
+     * @param user 
+     */
     @Override
     public void remove(User user) {
         users.remove(user.getEmail());
