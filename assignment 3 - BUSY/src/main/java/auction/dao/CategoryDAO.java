@@ -13,13 +13,17 @@ public interface CategoryDAO {
     int count();
 
     /**
-     * The item is persisted. If a item with the same id allready exists an EntityExistsException is thrown
+     * The item is persisted. If a item with the same id allready exists an
+     * EntityExistsException is thrown
+     *
      * @param category
      */
     void create(Category category);
 
     /**
-     * Merge the state of the given item into persistant context. If the item did not exist an IllegalArgumentException is thrown
+     * Merge the state of the given item into persistant context. If the item
+     * did not exist an IllegalArgumentException is thrown
+     *
      * @param category
      */
     void edit(Category category);
@@ -36,15 +40,17 @@ public interface CategoryDAO {
      * @return list of item instances
      */
     List<Category> findAll();
+
     /**
      *
-     * @param description 
+     * @param description
      * @return list of item instances having specified description
      */
     List<Category> findByDescription(String description);
 
     /**
      * Remove the entity instance
+     *
      * @param category - entity instance
      */
     void remove(Category category);

@@ -16,6 +16,7 @@ public class RegistrationMgr {
     /**
      * Registreert een gebruiker met het als parameter gegeven e-mailadres, mits
      * zo'n gebruiker nog niet bestaat.
+     *
      * @param email
      * @return Een Userobject dat geïdentificeerd wordt door het gegeven
      * e-mailadres (nieuw aangemaakt of reeds bestaand). Als het e-mailadres

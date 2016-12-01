@@ -7,16 +7,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class CategoryDAOJPAImpl implements CategoryDAO {
+
     EntityManagerFactory ef = Persistence.createEntityManagerFactory("db");
     EntityManager categories = ef.createEntityManager();
-    
+
     public CategoryDAOJPAImpl() {
     }
 
     @Override
     public int count() {
         return (Integer) categories.createNativeQuery("SELECT count(*) FROM Category")
-                .getSingleResult();  
+                .getSingleResult();
     }
 
     @Override
@@ -30,7 +31,6 @@ public class CategoryDAOJPAImpl implements CategoryDAO {
     public void edit(Category category) {
         categories.merge(category);
     }
-
 
     @Override
     public List<Category> findAll() {

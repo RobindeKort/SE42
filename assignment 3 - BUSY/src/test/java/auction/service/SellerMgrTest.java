@@ -8,8 +8,6 @@ import nl.fontys.util.Money;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
@@ -55,31 +53,28 @@ public class SellerMgrTest {
     public void testRevokeItem() {
         String omsch = "omsch";
         String omsch2 = "omsch2";
-        
+
         User seller = registrationMgr.registerUser("sel@nl");
         User buyer = registrationMgr.registerUser("buy@nl");
         Category cat = new Category("cat1");
         CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
         categories.create(cat);
-        
-        
-            // revoke before bidding
+
+        // revoke before bidding
         Item item1 = sellerMgr.offerItem(seller, cat, omsch);
         boolean res = sellerMgr.revokeItem(item1);
         assertTrue(res);
         int count = auctionMgr.findItemByDescription(omsch).size();
         assertEquals(0, count);
-        
-            // revoke after bid has been made
+
+        // revoke after bid has been made
         Item item2 = sellerMgr.offerItem(seller, cat, omsch2);
         auctionMgr.newBid(item2, buyer, new Money(100, "Euro"));
         boolean res2 = sellerMgr.revokeItem(item2);
         assertFalse(res2);
         int count2 = auctionMgr.findItemByDescription(omsch2).size();
         assertEquals(1, count2);
-        
-        
-        
+
     }
 
 }

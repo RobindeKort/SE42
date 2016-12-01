@@ -8,16 +8,17 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class ItemDAOJPAImpl implements ItemDAO {
+
     EntityManagerFactory ef = Persistence.createEntityManagerFactory("db");
     EntityManager items = ef.createEntityManager();
-    
+
     public ItemDAOJPAImpl() {
     }
 
     @Override
     public int count() {
         return (Integer) items.createNativeQuery("SELECT count(*) FROM item")
-                .getSingleResult();  
+                .getSingleResult();
     }
 
     @Override
@@ -31,7 +32,6 @@ public class ItemDAOJPAImpl implements ItemDAO {
     public void edit(Item item) {
         items.merge(item);
     }
-
 
     @Override
     public List<Item> findAll() {

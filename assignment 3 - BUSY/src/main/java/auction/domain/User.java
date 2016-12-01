@@ -3,23 +3,25 @@ package auction.domain;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
 @Entity
 public class User {
+
     /**
      * The email address from the user
      */
     @Id
     private String email;
-    
+
     /**
      * Empty con
      */
-    public User() {}
+    public User() {
+    }
 
     /**
      * Constructs a user using the email address
-     * @param email 
+     *
+     * @param email
      */
     public User(String email) {
         this.email = email;
@@ -28,6 +30,7 @@ public class User {
 
     /**
      * Returns the email address from the selected user
+     *
      * @return The email address
      */
     public String getEmail() {

@@ -21,7 +21,7 @@ public class UserDAOCollectionImpl implements UserDAO {
 
     @Override
     public void create(User user) {
-         if (findByEmail(user.getEmail()) != null) {
+        if (findByEmail(user.getEmail()) != null) {
             throw new EntityExistsException();
         }
         users.put(user.getEmail(), user);
@@ -34,7 +34,6 @@ public class UserDAOCollectionImpl implements UserDAO {
         }
         users.put(user.getEmail(), user);
     }
-
 
     @Override
     public List<User> findAll() {

@@ -24,8 +24,9 @@ public class UserDAOJPAImpl implements UserDAO {
 
     /**
      * Transaction moet verplaatst worden naar een 'hoger niveau' zodat meerdere
-     * persists/merges tegelijk uitgevoerd kunnen worden. 
-     * @param user 
+     * persists/merges tegelijk uitgevoerd kunnen worden.
+     *
+     * @param user
      */
     @Override
     public void create(User user) {
@@ -39,8 +40,9 @@ public class UserDAOJPAImpl implements UserDAO {
 
     /**
      * Transaction moet verplaatst worden naar een 'hoger niveau' zodat meerdere
-     * persists/merges tegelijk uitgevoerd kunnen worden. 
-     * @param user 
+     * persists/merges tegelijk uitgevoerd kunnen worden.
+     *
+     * @param user
      */
     @Override
     public void edit(User user) {
@@ -64,7 +66,8 @@ public class UserDAOJPAImpl implements UserDAO {
 
     /**
      * Wanneer gebruik je een Transaction? Navragen!
-     * @param user 
+     *
+     * @param user
      */
     @Override
     public void remove(User user) {

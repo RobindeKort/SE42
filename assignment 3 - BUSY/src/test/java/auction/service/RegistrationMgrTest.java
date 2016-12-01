@@ -3,7 +3,6 @@ package auction.service;
 import java.util.List;
 import static org.junit.Assert.*;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,7 +48,6 @@ public class RegistrationMgrTest {
         users = registrationMgr.getUsers();
         assertEquals(1, users.size());
         assertSame(users.get(0), user1);
-
 
         User user2 = registrationMgr.registerUser("xxx9@yyy");
         users = registrationMgr.getUsers();

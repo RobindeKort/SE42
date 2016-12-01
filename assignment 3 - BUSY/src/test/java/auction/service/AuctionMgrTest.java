@@ -88,7 +88,7 @@ public class AuctionMgrTest {
         CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
         categories.create(cat);
         Item item1 = sellerMgr.offerItem(seller, cat, omsch);
-        
+
         Bid new1 = auctionMgr.newBid(item1, buyer, new Money(10, "eur"));
         assertEquals(emailb, new1.getBuyer().getEmail());
 
