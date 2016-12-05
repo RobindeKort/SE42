@@ -1,6 +1,5 @@
 package auction.service;
 
-import auction.dao.CategoryDAOJPAImpl;
 import static org.junit.Assert.*;
 
 import nl.fontys.util.Money;
@@ -11,7 +10,9 @@ import org.junit.Test;
 import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
+import java.util.List;
 import javax.persistence.Persistence;
+import org.junit.After;
 import util.DatabaseCleaner;
 
 public class SellerMgrTest {
@@ -22,11 +23,14 @@ public class SellerMgrTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.print("before seller");
         registrationMgr = new RegistrationMgr();
         auctionMgr = new AuctionMgr();
         sellerMgr = new SellerMgr();
-        DatabaseCleaner dc = new DatabaseCleaner(Persistence.createEntityManagerFactory("db").createEntityManager());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        DatabaseCleaner dc = new DatabaseCleaner(registrationMgr.getEntityManager());
         dc.clean();
     }
 
@@ -39,8 +43,6 @@ public class SellerMgrTest {
 
         User user1 = registrationMgr.registerUser("xx@nl");
         Category cat = new Category("cat1");
-        CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
-        categories.create(cat);
         Item item1 = sellerMgr.offerItem(user1, cat, omsch);
         assertEquals(omsch, item1.getDescription());
         assertNotNull(item1.getId());
@@ -57,14 +59,14 @@ public class SellerMgrTest {
         User seller = registrationMgr.registerUser("sel@nl");
         User buyer = registrationMgr.registerUser("buy@nl");
         Category cat = new Category("cat1");
-        CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
-        categories.create(cat);
 
         // revoke before bidding
         Item item1 = sellerMgr.offerItem(seller, cat, omsch);
         boolean res = sellerMgr.revokeItem(item1);
         assertTrue(res);
-        int count = auctionMgr.findItemByDescription(omsch).size();
+
+        List<Item> itemsFromDatabase = auctionMgr.findItemByDescription(omsch);
+        int count = itemsFromDatabase.size();
         assertEquals(0, count);
 
         // revoke after bid has been made

@@ -1,29 +1,37 @@
 package auction.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Contains a user entity
  */
 @Entity
+@Table(name = "user")
+@NamedQueries({
+    @NamedQuery(name = "User.countUsers", query = "select count(user) from User as user"),
+    @NamedQuery(name = "User.getAllUsers", query = "select user from User as user"),
+    @NamedQuery(name = "User.findUserByEmail", query = "select user from User as user where user.email = :email")
+})
 public class User {
 
     /**
      * The email address from the user
      */
     @Id
+    @GeneratedValue
+    private long Id;
+    @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.PERSIST)
-    private List<Item> items = new ArrayList<>();
-
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
-    private List<Bid> bids = new ArrayList<>();
+    public User(String email) {
+        this.email = email;
+    }
 
     /**
      * Empty con
@@ -32,13 +40,19 @@ public class User {
     }
 
     /**
-     * Constructs a user using the email address
+     * Returns the id selected user
      *
-     * @param email
+     * @return id
      */
-    public User(String email) {
-        this.email = email;
+    public long getId() {
+        return Id;
+    }
 
+    /**
+     * Set id
+     */
+    public void setId(long id) {
+        this.Id = id;
     }
 
     /**
@@ -48,5 +62,12 @@ public class User {
      */
     public String getEmail() {
         return email;
+    }
+
+    /**
+     * Set the email address from the selected user
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

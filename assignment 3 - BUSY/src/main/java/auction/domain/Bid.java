@@ -1,10 +1,10 @@
 package auction.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import nl.fontys.util.FontysTime;
 import nl.fontys.util.Money;
 
@@ -12,15 +12,14 @@ import nl.fontys.util.Money;
 public class Bid {
 
     @Id
+    @GeneratedValue
     private Long id;
 
-    @Column
+    @Column //niet helemaal zeker
     private FontysTime time;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     private User buyer;
-
-    @Column
     private Money amount;
 
     public Bid() {

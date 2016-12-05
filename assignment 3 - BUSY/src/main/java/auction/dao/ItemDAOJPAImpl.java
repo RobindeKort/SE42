@@ -4,21 +4,22 @@ import auction.domain.Item;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class ItemDAOJPAImpl implements ItemDAO {
 
-    EntityManagerFactory ef = Persistence.createEntityManagerFactory("db");
-    EntityManager items = ef.createEntityManager();
+    private EntityManager items;
 
     public ItemDAOJPAImpl() {
+        this.items = Persistence.createEntityManagerFactory("db").createEntityManager();
     }
 
     @Override
     public int count() {
-        return (Integer) items.createNativeQuery("SELECT count(*) FROM item")
-                .getSingleResult();
+        Query q = items.createNamedQuery("Item.count", Item.class);
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class ItemDAOJPAImpl implements ItemDAO {
 
     @Override
     public List<Item> findAll() {
-        return items.createQuery("SELECT * FROM Item").getResultList();
+        return items.createNamedQuery("Item.getAllItems", Item.class).getResultList();
     }
 
     @Override
@@ -47,12 +48,20 @@ public class ItemDAOJPAImpl implements ItemDAO {
 
     @Override
     public Item find(Long id) {
-        return items.find(Item.class, id);
+        Item item;
+        Query query = items.createNamedQuery("Item.findByID", Item.class);
+        query.setParameter("id", id);
+        try {
+            item = (Item) query.getSingleResult();
+        } catch (NoResultException e) {
+            item = null;
+        }
+        return item;
     }
 
     @Override
     public List<Item> findByDescription(String description) {
-        Query q = items.createQuery("SELECT i FROM Item i WHERE i.description = :description", Item.class); //HMMMM??? effe navragen aan ROBINIO
+        Query q = items.createNamedQuery("Item.findByDescription", Item.class);
         return q.setParameter("description", description).getResultList();
     }
 }

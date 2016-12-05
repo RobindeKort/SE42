@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import auction.domain.User;
 import javax.persistence.Persistence;
+import org.junit.After;
 import util.DatabaseCleaner;
 
 public class JPARegistrationMgrTest {
@@ -16,9 +17,12 @@ public class JPARegistrationMgrTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.print("before");
         registrationMgr = new RegistrationMgr();
-        DatabaseCleaner dc = new DatabaseCleaner(Persistence.createEntityManagerFactory("db").createEntityManager());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        DatabaseCleaner dc = new DatabaseCleaner(registrationMgr.getEntityManager());
         dc.clean();
     }
 

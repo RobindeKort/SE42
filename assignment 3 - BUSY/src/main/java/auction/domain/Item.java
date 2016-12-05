@@ -1,19 +1,27 @@
 package auction.domain;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import nl.fontys.util.Money;
 import javax.persistence.Id;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
  * item entity
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Item.count", query = "select count(i) from Item as i"),
+    @NamedQuery(name = "Item.findByID", query = "select i from Item as i where i.id = :id"),
+    @NamedQuery(name = "Item.findByDescription", query = "select i from Item as i where i.description = :description"),
+    @NamedQuery(name = "Item.getAllItems", query = "select i from Item as i")
+})
 public class Item implements Comparable {
 
     /**
@@ -26,19 +34,20 @@ public class Item implements Comparable {
     /**
      * The seller of the selected item
      */
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     private User seller;
 
     /**
      * The category the item is in
      */
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "description", column = @Column(name = "c_description"))})
     private Category category;
 
     /**
      * The description of the item
      */
-    @Column
     private String description;
 
     /**

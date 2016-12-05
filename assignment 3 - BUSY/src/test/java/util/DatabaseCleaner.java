@@ -1,7 +1,6 @@
 package util;
 
 import auction.domain.Bid;
-import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
 import java.sql.SQLException;
@@ -13,7 +12,6 @@ public class DatabaseCleaner {
 
     private static final Class<?>[] ENTITY_TYPES = {
         Item.class,
-        Category.class,
         Bid.class,
         User.class
     };

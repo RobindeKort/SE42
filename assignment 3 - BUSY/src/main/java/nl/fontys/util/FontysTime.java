@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.TimeZone;
 
-public class FontysTime implements Serializable{
+public class FontysTime implements Serializable {
 
     private long seconds;
 

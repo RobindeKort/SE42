@@ -4,22 +4,21 @@ import auction.domain.User;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 public class UserDAOJPAImpl implements UserDAO {
 
-    EntityManagerFactory ef = Persistence.createEntityManagerFactory("db");
-    EntityManager users = ef.createEntityManager();
+    private EntityManager users;
 
-    public UserDAOJPAImpl() {
+    public UserDAOJPAImpl(EntityManager users) {
+        this.users = users;
     }
 
     @Override
     public int count() {
-        int ret = (Integer) users.createNamedQuery("SELECT count(*) FROM User")
-                .getSingleResult();
-        return ret;
+        Query q = users.createNamedQuery("User.countUsers", User.class);
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     /**
@@ -56,21 +55,29 @@ public class UserDAOJPAImpl implements UserDAO {
 
     @Override
     public List<User> findAll() {
-        return users.createQuery("SELECT k FROM User k").getResultList();
+        return users.createNamedQuery("User.getAllUsers", User.class).getResultList();
     }
 
     @Override
     public User findByEmail(String email) {
-        return users.find(User.class, email);
+        Query q = users.createNamedQuery("User.findUserByEmail", User.class);
+        q.setParameter("email", email);
+        User user = null;
+
+        try {
+            user = (User) q.getSingleResult();
+        } catch (NoResultException e) {
+            user = null;
+        }
+        return user;
     }
 
     /**
-     * Wanneer gebruik je een Transaction? Navragen!
      *
      * @param user
      */
     @Override
     public void remove(User user) {
-        users.remove(user.getEmail());
+        users.remove(users.merge(user));
     }
 }

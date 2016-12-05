@@ -1,20 +1,17 @@
 package auction.service;
 
-import auction.dao.CategoryDAOJPAImpl;
 import static org.junit.Assert.*;
 
 import nl.fontys.util.Money;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import auction.domain.Bid;
 import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Persistence;
+import org.junit.After;
 import util.DatabaseCleaner;
 
 public class AuctionMgrTest {
@@ -25,11 +22,14 @@ public class AuctionMgrTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.print("before auc");
         registrationMgr = new RegistrationMgr();
         auctionMgr = new AuctionMgr();
         sellerMgr = new SellerMgr();
-        DatabaseCleaner dc = new DatabaseCleaner(Persistence.createEntityManagerFactory("db").createEntityManager());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        DatabaseCleaner dc = new DatabaseCleaner(registrationMgr.getEntityManager());
         dc.clean();
     }
 
@@ -41,8 +41,6 @@ public class AuctionMgrTest {
 
         User seller1 = registrationMgr.registerUser(email);
         Category cat = new Category("cat2");
-        CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
-        categories.create(cat);
         Item item1 = sellerMgr.offerItem(seller1, cat, omsch);
         Item item2 = auctionMgr.getItem(item1.getId());
         assertEquals(omsch, item2.getDescription());
@@ -59,8 +57,6 @@ public class AuctionMgrTest {
         User seller3 = registrationMgr.registerUser(email3);
         User seller4 = registrationMgr.registerUser(email4);
         Category cat = new Category("cat3");
-        CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
-        categories.create(cat);
         Item item1 = sellerMgr.offerItem(seller3, cat, omsch);
         Item item2 = sellerMgr.offerItem(seller4, cat, omsch);
 
@@ -85,8 +81,6 @@ public class AuctionMgrTest {
         User buyer2 = registrationMgr.registerUser(emailb2);
         // eerste bod
         Category cat = new Category("cat9");
-        CategoryDAOJPAImpl categories = new CategoryDAOJPAImpl();
-        categories.create(cat);
         Item item1 = sellerMgr.offerItem(seller, cat, omsch);
 
         Bid new1 = auctionMgr.newBid(item1, buyer, new Money(10, "eur"));
