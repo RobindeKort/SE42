@@ -1,8 +1,15 @@
 package auction.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+/**
+ * Contains a user entity
+ */
 @Entity
 public class User {
 
@@ -11,6 +18,12 @@ public class User {
      */
     @Id
     private String email;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.PERSIST)
+    private List<Item> items = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
+    private List<Bid> bids = new ArrayList<>();
 
     /**
      * Empty con

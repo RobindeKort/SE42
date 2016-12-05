@@ -56,7 +56,7 @@ public class UserDAOJPAImpl implements UserDAO {
 
     @Override
     public List<User> findAll() {
-        return users.createQuery("SELECT * FROM User").getResultList();
+        return users.createQuery("SELECT k FROM User k").getResultList();
     }
 
     @Override

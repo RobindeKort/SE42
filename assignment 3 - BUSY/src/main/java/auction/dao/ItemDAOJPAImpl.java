@@ -52,7 +52,7 @@ public class ItemDAOJPAImpl implements ItemDAO {
 
     @Override
     public List<Item> findByDescription(String description) {
-        Query q = items.createQuery("SELECT item FROM ITEM WHERE item.description = :description", Item.class); //HMMMM??? effe navragen aan ROBINIO
+        Query q = items.createQuery("SELECT i FROM Item i WHERE i.description = :description", Item.class); //HMMMM??? effe navragen aan ROBINIO
         return q.setParameter("description", description).getResultList();
     }
 }
