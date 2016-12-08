@@ -1,5 +1,6 @@
 package auction.service;
 
+import auction.domain.Bid;
 import org.junit.Ignore;
 import javax.persistence.*;
 import util.DatabaseCleaner;
@@ -7,6 +8,7 @@ import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
 import java.util.Iterator;
+import nl.fontys.util.Money;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -118,12 +120,38 @@ public class ItemsFromSellerTest {
         it20.next();
         assertTrue(it20.hasNext());
 
-
         User user30 = item20.getSeller();
         Iterator<Item> it30 = user30.getOfferedItems();
         assertTrue(it30.hasNext());
         it30.next();
         assertTrue(it30.hasNext());
+    }
+    
+    @Test
+    public void Opdracht2() {
+        //Aanmaken van een item
+        Category category = new Category("cat100");
+        User user = registrationMgr.registerUser("Kappa@kappa.nl");
+        Item item = sellerMgr.offerItem(user, category, "IAHBSDHKSAKJDAKJSDJk");
 
+        //Kijken of het aanmaken gelukt is
+        assertEquals("User heeft geen item gekregen", 1, user.numberOfOfferdItems());
+        assertNull("Hoogste bid moet null zijn", item.getHighestBid());
+
+        //Aanmaken van de BIDS
+        Bid bid = auctionMgr.newBid(item, user, new Money(10, "Euro"));
+        Bid bid1 = auctionMgr.newBid(item, user, new Money(20, "Euro"));
+        Bid bid2 = auctionMgr.newBid(item, user, new Money(15, "Euro"));
+
+        //Test na de gemaakt bid, kijken of het echt bestaat
+        assertNotNull("Item heeft geen nbid", item.getHighestBid());
+        assertEquals("Het item heeft niet dezelfde item als de gemaakte bid", item, bid.getBettedOnItem());
+        assertEquals("De bieder is niet hetzelfde", user, bid.getBuyer());
+        assertEquals("de moneys komt noet overeen", bid.getAmount(), new Money(10, "Euro"));
+        assertEquals("Kijkt of de gemaakt bid gemaakt is", bid1.getAmount(), new Money(20, "Euro"));
+        assertEquals("check de biduser", bid1.getBuyer(), user);
+        assertEquals("GEmaakte nid moet op het item staan", bid1.getBettedOnItem(), item);
+        assertNull("Aangezien bid 1 hooger was dan bid2 moet dit null worden/zijn", bid2);
+        assertEquals("Kijken of het niet perongelijk door is gekomen enzo", item.getHighestBid().getAmount(), new Money(20, "Euro"));
     }
 }

@@ -2,6 +2,7 @@ package auction.domain;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import nl.fontys.util.Money;
 import javax.persistence.Id;
 import javax.persistence.Entity;
@@ -47,6 +48,7 @@ public class Item implements Comparable {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "description", column = @Column(name = "c_description"))})
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Category category;
 
     /**
@@ -57,11 +59,8 @@ public class Item implements Comparable {
     /**
      * The highest bid on the selected item
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "bettedOnItem")
     private Bid highest;
-
-    public Item() {
-    }
 
     /**
      * Item constructor
@@ -74,6 +73,9 @@ public class Item implements Comparable {
         this.seller = seller;
         this.category = category;
         this.description = description;
+    }
+
+    public Item() {
     }
 
     /**

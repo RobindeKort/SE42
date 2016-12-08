@@ -6,12 +6,11 @@ import nl.fontys.util.Money;
 import auction.domain.Bid;
 import auction.domain.Item;
 import auction.domain.User;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AuctionMgr {
 
-    private ItemDAO itemDAO;
+    ItemDAO itemDAO;
 
     public AuctionMgr() {
         itemDAO = new ItemDAOJPAImpl();
@@ -42,6 +41,8 @@ public class AuctionMgr {
      * amount niet hoger was dan het laatste bod, dan null
      */
     public Bid newBid(Item item, User buyer, Money amount) {
-        return item.newBid(buyer, amount);
+        Bid bid  = item.newBid(buyer,amount);
+        itemDAO.edit(item);
+        return bid;
     }
 }

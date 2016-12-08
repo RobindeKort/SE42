@@ -23,6 +23,7 @@ public class SellerMgr {
     public Item offerItem(User seller, Category cat, String description) {
         Item item = new Item(seller, cat, description);
         itemDAOJPA.create(item);
+        seller.addItemToUser(item);
         return item;
     }
 
