@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -34,9 +35,12 @@ public class Item implements Comparable {
     /**
      * The seller of the selected item
      */
-    @OneToOne
+    @ManyToOne
     private User seller;
 
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
     /**
      * The category the item is in
      */
@@ -128,7 +132,7 @@ public class Item implements Comparable {
         if (highest != null && highest.getAmount().compareTo(amount) >= 0) {
             return null;
         }
-        highest = new Bid(buyer, amount);
+        highest = new Bid(buyer, amount, this);
         return highest;
     }
 
@@ -138,18 +142,35 @@ public class Item implements Comparable {
      * @param arg0
      * @return
      */
-    public int compareTo(Object arg0) {
-        //TODO
-        return -1;
+    public int compareTo(Object other) {
+        if (other instanceof Item) {
+            if (this.id == ((Item) other).getId()) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            return -1;
+        }
     }
 
     public boolean equals(Object o) {
-        //TODO
-        return false;
+        if (o instanceof Item) {
+            return this == o;
+        } else {
+            return false;
+        }
     }
 
+    //https://en.wikipedia.org/wiki/Java_hashCode() ik heb een random getal 10 gepakt :P
     public int hashCode() {
-        //TODO
-        return 0;
+        int result = id.hashCode();
+        result = 10 * result + seller.hashCode();
+        result = 10 * result + category.hashCode();
+        result = 10 * result + description.hashCode();
+        if (highest != null) {
+            result = 10 * result + highest.hashCode();
+        }
+        return result;
     }
 }

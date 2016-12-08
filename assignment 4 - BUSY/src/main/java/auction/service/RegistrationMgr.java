@@ -58,6 +58,10 @@ public class RegistrationMgr {
         return userDAO.findAll();
     }
 
+    public void getOfferedItems(User user) {
+
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }

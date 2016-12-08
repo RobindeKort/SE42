@@ -15,6 +15,9 @@ public class Bid {
     @GeneratedValue
     private Long id;
 
+    @OneToOne
+    private Item bettedOnItem;
+    
     @Column //niet helemaal zeker
     private FontysTime time;
 
@@ -25,9 +28,18 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(User buyer, Money amount) {
+    public Bid(User buyer, Money amount, Item bettedOnItem) {
         this.buyer = buyer;
         this.amount = amount;
+        this.bettedOnItem = bettedOnItem;
+    }
+
+    public void setBettedOnItem(Item bettedOnItem) {
+        this.bettedOnItem = bettedOnItem;
+    }
+
+    public Item getBettedOnItem() {
+        return bettedOnItem;
     }
 
     public FontysTime getTime() {
