@@ -10,14 +10,17 @@ import org.junit.Test;
 import auction.domain.Category;
 import auction.domain.Item;
 import auction.domain.User;
-import java.sql.SQLException;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.junit.After;
-import org.junit.Ignore;
 import util.DatabaseCleaner;
 
 public class SellerMgrTest {
 
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("db");
+    private EntityManager em = emf.createEntityManager();
     private AuctionMgr auctionMgr;
     private RegistrationMgr registrationMgr;
     private SellerMgr sellerMgr;
@@ -31,19 +34,13 @@ public class SellerMgrTest {
 
     @After
     public void tearDown() throws Exception {
-       DatabaseCleaner cleaner = new DatabaseCleaner(registrationMgr.getEntityManager());
-        try {
-            cleaner.clean();
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        DatabaseCleaner dc = new DatabaseCleaner(em);
+        dc.clean();
     }
 
     /**
      * Test of offerItem method, of class SellerMgr.
      */
-    @Ignore
     @Test
     public void testOfferItem() {
         String omsch = "omsch";
@@ -53,17 +50,11 @@ public class SellerMgrTest {
         Item item1 = sellerMgr.offerItem(user1, cat, omsch);
         assertEquals(omsch, item1.getDescription());
         assertNotNull(item1.getId());
-        try {
-            tearDown();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * Test of revokeItem method, of class SellerMgr.
      */
-    @Ignore
     @Test
     public void testRevokeItem() {
         String omsch = "omsch";
@@ -89,7 +80,5 @@ public class SellerMgrTest {
         assertFalse(res2);
         int count2 = auctionMgr.findItemByDescription(omsch2).size();
         assertEquals(1, count2);
-
     }
-
 }

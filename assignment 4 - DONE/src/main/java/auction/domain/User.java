@@ -3,6 +3,7 @@ package auction.domain;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
