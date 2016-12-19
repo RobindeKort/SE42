@@ -16,6 +16,7 @@ public class Bid {
     private Long id;
 
     @OneToOne
+    @Column(nullable = false)
     private Item bettedOnItem;
     
     @Column //niet helemaal zeker
