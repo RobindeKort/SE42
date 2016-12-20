@@ -42,6 +42,36 @@ public interface Auction {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "revokeItem", targetNamespace = "http://web/", className = "web.RevokeItem")
+    @ResponseWrapper(localName = "revokeItemResponse", targetNamespace = "http://web/", className = "web.RevokeItemResponse")
+    @Action(input = "http://web/Auction/revokeItemRequest", output = "http://web/Auction/revokeItemResponse")
+    public boolean revokeItem(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Item arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns web.Item
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getItem", targetNamespace = "http://web/", className = "web.GetItem")
+    @ResponseWrapper(localName = "getItemResponse", targetNamespace = "http://web/", className = "web.GetItemResponse")
+    @Action(input = "http://web/Auction/getItemRequest", output = "http://web/Auction/getItemResponse")
+    public Item getItem(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Long arg0);
+
+    /**
+     * 
      * @param arg2
      * @param arg1
      * @param arg0
@@ -90,35 +120,5 @@ public interface Auction {
     @ResponseWrapper(localName = "DatabaseCleanResponse", targetNamespace = "http://web/", className = "web.DatabaseCleanResponse")
     @Action(input = "http://web/Auction/DatabaseCleanRequest", output = "http://web/Auction/DatabaseCleanResponse")
     public void databaseClean();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns web.Item
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getItem", targetNamespace = "http://web/", className = "web.GetItem")
-    @ResponseWrapper(localName = "getItemResponse", targetNamespace = "http://web/", className = "web.GetItemResponse")
-    @Action(input = "http://web/Auction/getItemRequest", output = "http://web/Auction/getItemResponse")
-    public Item getItem(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Long arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "revokeItem", targetNamespace = "http://web/", className = "web.RevokeItem")
-    @ResponseWrapper(localName = "revokeItemResponse", targetNamespace = "http://web/", className = "web.RevokeItemResponse")
-    @Action(input = "http://web/Auction/revokeItemRequest", output = "http://web/Auction/revokeItemResponse")
-    public boolean revokeItem(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Item arg0);
 
 }

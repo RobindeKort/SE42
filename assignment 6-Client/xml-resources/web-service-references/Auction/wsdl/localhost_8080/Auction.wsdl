@@ -10,6 +10,18 @@
 <message name="findItemByDescriptionResponse">
 <part name="parameters" element="tns:findItemByDescriptionResponse"></part>
 </message>
+<message name="revokeItem">
+<part name="parameters" element="tns:revokeItem"></part>
+</message>
+<message name="revokeItemResponse">
+<part name="parameters" element="tns:revokeItemResponse"></part>
+</message>
+<message name="getItem">
+<part name="parameters" element="tns:getItem"></part>
+</message>
+<message name="getItemResponse">
+<part name="parameters" element="tns:getItemResponse"></part>
+</message>
 <message name="newBid">
 <part name="parameters" element="tns:newBid"></part>
 </message>
@@ -28,22 +40,18 @@
 <message name="DatabaseCleanResponse">
 <part name="parameters" element="tns:DatabaseCleanResponse"></part>
 </message>
-<message name="getItem">
-<part name="parameters" element="tns:getItem"></part>
-</message>
-<message name="getItemResponse">
-<part name="parameters" element="tns:getItemResponse"></part>
-</message>
-<message name="revokeItem">
-<part name="parameters" element="tns:revokeItem"></part>
-</message>
-<message name="revokeItemResponse">
-<part name="parameters" element="tns:revokeItemResponse"></part>
-</message>
 <portType name="Auction">
 <operation name="findItemByDescription">
 <input wsam:Action="http://web/Auction/findItemByDescriptionRequest" message="tns:findItemByDescription"></input>
 <output wsam:Action="http://web/Auction/findItemByDescriptionResponse" message="tns:findItemByDescriptionResponse"></output>
+</operation>
+<operation name="revokeItem">
+<input wsam:Action="http://web/Auction/revokeItemRequest" message="tns:revokeItem"></input>
+<output wsam:Action="http://web/Auction/revokeItemResponse" message="tns:revokeItemResponse"></output>
+</operation>
+<operation name="getItem">
+<input wsam:Action="http://web/Auction/getItemRequest" message="tns:getItem"></input>
+<output wsam:Action="http://web/Auction/getItemResponse" message="tns:getItemResponse"></output>
 </operation>
 <operation name="newBid">
 <input wsam:Action="http://web/Auction/newBidRequest" message="tns:newBid"></input>
@@ -57,18 +65,28 @@
 <input wsam:Action="http://web/Auction/DatabaseCleanRequest" message="tns:DatabaseClean"></input>
 <output wsam:Action="http://web/Auction/DatabaseCleanResponse" message="tns:DatabaseCleanResponse"></output>
 </operation>
-<operation name="getItem">
-<input wsam:Action="http://web/Auction/getItemRequest" message="tns:getItem"></input>
-<output wsam:Action="http://web/Auction/getItemResponse" message="tns:getItemResponse"></output>
-</operation>
-<operation name="revokeItem">
-<input wsam:Action="http://web/Auction/revokeItemRequest" message="tns:revokeItem"></input>
-<output wsam:Action="http://web/Auction/revokeItemResponse" message="tns:revokeItemResponse"></output>
-</operation>
 </portType>
 <binding name="AuctionPortBinding" type="tns:Auction">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"></soap:binding>
 <operation name="findItemByDescription">
+<soap:operation soapAction=""></soap:operation>
+<input>
+<soap:body use="literal"></soap:body>
+</input>
+<output>
+<soap:body use="literal"></soap:body>
+</output>
+</operation>
+<operation name="revokeItem">
+<soap:operation soapAction=""></soap:operation>
+<input>
+<soap:body use="literal"></soap:body>
+</input>
+<output>
+<soap:body use="literal"></soap:body>
+</output>
+</operation>
+<operation name="getItem">
 <soap:operation soapAction=""></soap:operation>
 <input>
 <soap:body use="literal"></soap:body>
@@ -96,24 +114,6 @@
 </output>
 </operation>
 <operation name="DatabaseClean">
-<soap:operation soapAction=""></soap:operation>
-<input>
-<soap:body use="literal"></soap:body>
-</input>
-<output>
-<soap:body use="literal"></soap:body>
-</output>
-</operation>
-<operation name="getItem">
-<soap:operation soapAction=""></soap:operation>
-<input>
-<soap:body use="literal"></soap:body>
-</input>
-<output>
-<soap:body use="literal"></soap:body>
-</output>
-</operation>
-<operation name="revokeItem">
 <soap:operation soapAction=""></soap:operation>
 <input>
 <soap:body use="literal"></soap:body>

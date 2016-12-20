@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="currency" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="cents" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="currency" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,13 +28,29 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "money", propOrder = {
-    "currency",
-    "cents"
+    "cents",
+    "currency"
 })
 public class Money {
 
-    protected String currency;
     protected long cents;
+    protected String currency;
+
+    /**
+     * Gets the value of the cents property.
+     * 
+     */
+    public long getCents() {
+        return cents;
+    }
+
+    /**
+     * Sets the value of the cents property.
+     * 
+     */
+    public void setCents(long value) {
+        this.cents = value;
+    }
 
     /**
      * Gets the value of the currency property.
@@ -58,22 +74,6 @@ public class Money {
      */
     public void setCurrency(String value) {
         this.currency = value;
-    }
-
-    /**
-     * Gets the value of the cents property.
-     * 
-     */
-    public long getCents() {
-        return cents;
-    }
-
-    /**
-     * Sets the value of the cents property.
-     * 
-     */
-    public void setCents(long value) {
-        this.cents = value;
     }
 
 }

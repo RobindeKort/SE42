@@ -25,7 +25,6 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _OfferItem_QNAME = new QName("http://web/", "offerItem");
-    private final static QName _FontysTime_QNAME = new QName("http://web/", "fontysTime");
     private final static QName _RevokeItemResponse_QNAME = new QName("http://web/", "revokeItemResponse");
     private final static QName _GetItem_QNAME = new QName("http://web/", "getItem");
     private final static QName _NewBidResponse_QNAME = new QName("http://web/", "newBidResponse");
@@ -38,7 +37,6 @@ public class ObjectFactory {
     private final static QName _Bid_QNAME = new QName("http://web/", "bid");
     private final static QName _Category_QNAME = new QName("http://web/", "category");
     private final static QName _GetItemResponse_QNAME = new QName("http://web/", "getItemResponse");
-    private final static QName _Money_QNAME = new QName("http://web/", "money");
     private final static QName _DatabaseClean_QNAME = new QName("http://web/", "DatabaseClean");
     private final static QName _FindItemByDescription_QNAME = new QName("http://web/", "findItemByDescription");
     private final static QName _OfferItemResponse_QNAME = new QName("http://web/", "offerItemResponse");
@@ -107,14 +105,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FontysTime }
-     * 
-     */
-    public FontysTime createFontysTime() {
-        return new FontysTime();
-    }
-
-    /**
      * Create an instance of {@link RevokeItemResponse }
      * 
      */
@@ -163,14 +153,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Money }
-     * 
-     */
-    public Money createMoney() {
-        return new Money();
-    }
-
-    /**
      * Create an instance of {@link Bid }
      * 
      */
@@ -195,21 +177,28 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link FontysTime }
+     * 
+     */
+    public FontysTime createFontysTime() {
+        return new FontysTime();
+    }
+
+    /**
+     * Create an instance of {@link Money }
+     * 
+     */
+    public Money createMoney() {
+        return new Money();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link OfferItem }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://web/", name = "offerItem")
     public JAXBElement<OfferItem> createOfferItem(OfferItem value) {
         return new JAXBElement<OfferItem>(_OfferItem_QNAME, OfferItem.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FontysTime }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://web/", name = "fontysTime")
-    public JAXBElement<FontysTime> createFontysTime(FontysTime value) {
-        return new JAXBElement<FontysTime>(_FontysTime_QNAME, FontysTime.class, null, value);
     }
 
     /**
@@ -318,15 +307,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://web/", name = "getItemResponse")
     public JAXBElement<GetItemResponse> createGetItemResponse(GetItemResponse value) {
         return new JAXBElement<GetItemResponse>(_GetItemResponse_QNAME, GetItemResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Money }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://web/", name = "money")
-    public JAXBElement<Money> createMoney(Money value) {
-        return new JAXBElement<Money>(_Money_QNAME, Money.class, null, value);
     }
 
     /**

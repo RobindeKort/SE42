@@ -32,10 +32,10 @@ public interface Registration {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "registerUser", targetNamespace = "http://web/", className = "web.RegisterUser")
-    @ResponseWrapper(localName = "registerUserResponse", targetNamespace = "http://web/", className = "web.RegisterUserResponse")
-    @Action(input = "http://web/Registration/registerUserRequest", output = "http://web/Registration/registerUserResponse")
-    public User registerUser(
+    @RequestWrapper(localName = "getUser", targetNamespace = "http://web/", className = "web.GetUser")
+    @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://web/", className = "web.GetUserResponse")
+    @Action(input = "http://web/Registration/getUserRequest", output = "http://web/Registration/getUserResponse")
+    public User getUser(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -47,10 +47,10 @@ public interface Registration {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getUser", targetNamespace = "http://web/", className = "web.GetUser")
-    @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://web/", className = "web.GetUserResponse")
-    @Action(input = "http://web/Registration/getUserRequest", output = "http://web/Registration/getUserResponse")
-    public User getUser(
+    @RequestWrapper(localName = "registerUser", targetNamespace = "http://web/", className = "web.RegisterUser")
+    @ResponseWrapper(localName = "registerUserResponse", targetNamespace = "http://web/", className = "web.RegisterUserResponse")
+    @Action(input = "http://web/Registration/registerUserRequest", output = "http://web/Registration/registerUserResponse")
+    public User registerUser(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

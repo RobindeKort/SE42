@@ -66,6 +66,14 @@ public class Money implements Serializable, Comparable {
         return cents;
     }
 
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setCents(long cents) {
+        this.cents = cents;
+    }
+
     /**
      * voorwaarde: currency van m1 en m2 moeten gelijk zijn
      *
